@@ -52,3 +52,4 @@ jobs:
             -Dsonar.projectKey=SONAR_TOKEN
             -Dsonar.organization=d137cae67fb0086580e3241d072203fc71c9ad61
             -Dsonar.sources=src
+            
