@@ -49,6 +49,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: 
-            -Dsonar.projectKey=sonar_20223
-            -Dsonar.organization=scva
+            -Dsonar.projectKey=SONAR_TOKEN
+            -Dsonar.organization=d137cae67fb0086580e3241d072203fc71c9ad61
             -Dsonar.sources=src
