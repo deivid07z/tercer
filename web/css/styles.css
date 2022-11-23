@@ -1,0 +1,143 @@
+﻿/*
+	template: Lawyer&Attorney
+	author:   Luka Cvrk (www.solucija.com)
+*/
+
+/*
+* { margin: 0; padding: 0; }
+h3 { font: normal 1.4em "Trebuchet MS", Helvetica, Arial; margin: 0 0 20px; }
+h4 { font: normal 1.2em "Trebuchet MS", Helvetica, Arial; color: #dfdfdf; margin: 0 0 4px; }
+a { outline: 0; color: #304D6F; text-decoration: none; }
+li { list-style: none; }
+/*
+li a, img { display: block; }
+img { outline: 0; border: 0; }
+*/
+/*
+#wrapper { width: 984px; margin: auto; }
+.clr { clear: both; }
+#logo { float: left; padding: 30px 15px; }
+	#logo h1 a { color: #fff; }
+		#logo h1 a span { color: #808080; }
+#menu { height: 44px; padding: 5px 0 0 4px; }
+	#menu li { float: left; font-size: 1.3em; text-transform: uppercase; }
+		#menu li a { color: #888; margin: 0 50px 0 0; }
+			#menu li a.current, #menu li a:hover { color: #fff; }			
+	#pitch { clear: both; background: url(../images/pitch.jpg) no-repeat; height: 228px; margin: 0 0 30px; padding: 60px 360px 0 30px; }
+		#pitch h1 { font-size: 2.4em; color: #304D6F; margin: 0 0 20px; }
+		#pitch em { font-size: 1.3em; font-weight: bold; line-height: 1.6em; }
+/*                
+.content { background: url(../images/content.gif) repeat; padding: 20px; align-content: center}
+
+.link { background: #304D6F; color: #fff; padding: 5px 10px; font-size: .9em; }
+#main { padding: 20px; }
+.col { float: left; width: 292px; margin: 0 30px 15px 0; }
+	.col.last { float: right; margin-right: 0; }
+	.case img { float: left; clear: left; margin: 0 20px 20px 0; background: #121212; padding: 3px; }
+	.short { padding: 0 0 15px 0; background: url(../images/line.gif) repeat-x left bottom; }
+	.case a, .article a { color: #ddd; font-weight: bold; }
+	.date { font-size: .84em; margin: 0 0 3px; }
+#footer { clear: both; background: url(../images/line.gif) repeat-x; padding: 20px 20px 10px; font-size: .9em; }
+	#footer a { color: #ccc; margin: 0 10px 0 0; border-bottom: 1px dotted #444; padding: 0 0 1px; }
+	#links { float: right; }
+		#links a { margin: 0 0 0 10px; }
+	#footer p { margin: 0 0 8px; }
+*/
+
+/*
+    Template Usado
+*/
+
+body { 
+    font: .74em Tahoma, Verdana, Sans-Serif, Arial; 
+    background: url(../images/body.gif) repeat; 
+    color: #FFFFFF; align-content: center; 
+    text-align: center}
+h1 { font: bold 5.4em "Trebuchet MS", Helvetica, Arial; 
+    text-align: center;
+    color: #5bd87f}
+div { font: normal 1.4em "Trebuchet MS", Helvetica, Arial;
+      text-align: center }
+h2 { font: normal 1.8em "Trebuchet MS", Helvetica, Arial;
+     text-align: center;
+     color: #FFFFFF;
+     margin: 0 0 15px }
+h3 { font: normal 1.3em "Trebuchet MS", Helvetica, Arial; 
+     text-align: center;
+     color: #FFFFFF}
+p { font: normal 1.2em "Trebuchet MS", Helvetica, Arial;
+    text-align: center;
+    color: #FFFFFF;
+    margin: 0 0 15px;
+    line-height: 1.6em }
+
+ /* Bordered form */
+form {
+  border: 4px solid #f1f1f1;
+  align-content: center;
+  text-align: center;
+  width: 35%;
+  display: inline-block;
+}
+
+/* Full-width inputs */
+input[type=text], input[type=password] {
+  width: 50%;
+  padding: 10px 20px;
+  margin: 8px 5px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  text-align: center
+}
+
+/* Set a style for all buttons */
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 10px 8px;
+  border: none;
+  cursor: pointer;
+  width: 40%;
+}
+
+/* Add a hover effect for buttons */
+input[type=submit]:hover {
+  opacity: 0.8;
+}
+
+/* Center the avatar image inside this container */
+.imgcontainer {
+  text-align: center;
+  margin: 10px 0 10px 0;
+  align-content: center;
+}
+
+/* Avatar image */
+img.avatar {
+  width: 30%;
+  border-radius: 25%;
+  align-content: center
+}
+
+/* Add padding to containers */
+.container {
+  padding: 10px;
+}
+
+/* Add a hover effect for buttons */
+.cancelbtn:hover {
+  opacity: 0.8;
+}
+
+/* Extra style for the cancel button (red) */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+  color: white;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+}
