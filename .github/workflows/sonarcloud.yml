@@ -50,6 +50,6 @@ jobs:
         with:
           args: 
             -Dsonar.projectKey=SONAR_TOKEN
-            -Dsonar.organization=d137cae67fb0086580e3241d072203fc71c9ad61
+            -Dsonar.organization=deeac3245f1d451adac5235f677cdff1bd4e8edd
             -Dsonar.sources=src
             
