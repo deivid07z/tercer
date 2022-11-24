@@ -18,11 +18,10 @@ import util.RHException;
  * @author Sebastian
  */
 public class CargarAleatorioRevisor extends CargarRevisor {
-
+    private Random rd = SecureRandom.getInstanceStrong();
     public Revisor cargarRevisor(Revisor revis) {
         try {
             RevisorDAO revisorDao = new RevisorDAO();
-            Random rd = new Random();
             revisorDao.incluirRevisor(new Revisor(revis.getK_codRevisor(), "Pedrito"+rd.nextInt(50)+1));
             return revisorDao.buscarRevisor(revis.getK_codRevisor());
         } catch (RHException ex) {
