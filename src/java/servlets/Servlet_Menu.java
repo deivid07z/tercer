@@ -130,10 +130,11 @@ public class Servlet_Menu extends HttpServlet {
                 }
                 
                 if((request.getSession().getAttribute("idEstado")+"").equals("3")){
+                    CallableStatement cs;
                     try {
                         String runSP = "{call SAA.PK_GESTOR_ALMUERZO.P_OBTENER_SOLICITUDES(?,?)}";
                         Connection conn = ServiceLocator.getInstance().tomarConexion();
-                        CallableStatement cs = conn.prepareCall(runSP);
+                        cs = conn.prepareCall(runSP);
                         cs.registerOutParameter(1, OracleTypes.VARCHAR);
                         cs.registerOutParameter(2, OracleTypes.NUMBER);    
                         cs.execute();
@@ -142,11 +143,12 @@ public class Servlet_Menu extends HttpServlet {
                         CaException.getInstance().setDetalle(e);
                     }  finally {
                        ServiceLocator.getInstance().liberarConexion();
+                       cs.close();
                     }
                     try {
                         String runSP = "{call SAA.PK_GESTOR_ALMUERZO.PR_TIPO(?)}";
                         Connection conn = ServiceLocator.getInstance().tomarConexion();
-                        CallableStatement cs = conn.prepareCall(runSP);
+                        cs = conn.prepareCall(runSP);
                         cs.setString(1,request.getSession().getAttribute("periodo")+"");
                         cs.execute();
                         conn.commit();
@@ -154,6 +156,7 @@ public class Servlet_Menu extends HttpServlet {
                         CaException.getInstance().setDetalle(e);
                     }  finally {
                        ServiceLocator.getInstance().liberarConexion();
+                       cs.close();
                     }
                 }
             }

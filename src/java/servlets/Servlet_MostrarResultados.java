@@ -56,10 +56,11 @@ public class Servlet_MostrarResultados extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             ArrayList sol = new ArrayList();
+            CallableStatement cs;
             try {
                 String runSP;
                 Connection conn = ServiceLocator.getInstance().tomarConexion();
-                CallableStatement cs;
+                
                 if(request.getParameter("Formulario")!=null){
                     if(request.getParameter("Formulario").equals("Seleccionar Facultad")){
                         runSP = "{call SAA.PK_GESTOR_ADMINISTRATIVO.PR_LISTAR_SOLICITUDES_FACULTAD(?,?,?)}";
@@ -136,6 +137,7 @@ public class Servlet_MostrarResultados extends HttpServlet {
                  //throw new RHException( "ERROR", "ERROR "+ e.getMessage());
             }  finally {
                ServiceLocator.getInstance().liberarConexion();
+               cs.close();
             }
             out.println("<div class=\"container\">");
             out.println("<a href='Servlet_Menu'><input type='button' value='Volver' class=\"cancelbtn\"></a>");

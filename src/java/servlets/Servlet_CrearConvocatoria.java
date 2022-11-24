@@ -71,7 +71,7 @@ public class Servlet_CrearConvocatoria extends HttpServlet {
                 out.print(CaException.getInstance().getLastException());
                 CaException.getInstance().setDetalle(null);
             }
-            if((request.getParameter("fechaIC")==null || request.getParameter("fechaIC")==("")) && (request.getSession().getAttribute("formularioMenu").equals("Nueva Convocatoria"))){
+            if((request.getParameter("fechaIC")==null || request.getParameter("fechaIC").equals("")) && (request.getSession().getAttribute("formularioMenu").equals("Nueva Convocatoria"))){
                 out.println("<h1>Nueva Convocatoria</h1>");
                 out.println("<h2>A continuación registre cada uno de los campos para crear una concovatoria correspondiente al periodo deseado</h2><br>");
                 out.println("<form action=Servlet_CrearConvocatoria method=\"post\">");
@@ -127,7 +127,7 @@ public class Servlet_CrearConvocatoria extends HttpServlet {
                 out.println("<a href='Servlet_Menu'><input type='button' value='Volver' class=\"cancelbtn\"></a>");
                 out.println("</div>");
             }else{
-                if((request.getParameter("fechaIC")==null || request.getParameter("fechaIC")==("")) && (request.getSession().getAttribute("formularioMenu").equals("Actualizar Convocatoria"))&&(request.getParameter("convocatoriaAct")==null)&&request.getParameter("periodoBuscar")==null){
+                if((request.getParameter("fechaIC")==null || request.getParameter("fechaIC").equals("")) && (request.getSession().getAttribute("formularioMenu").equals("Actualizar Convocatoria"))&&(request.getParameter("convocatoriaAct")==null)&&request.getParameter("periodoBuscar")==null){
                     out.println("<form action=Servlet_CrearConvocatoria method=\"post\">");
                     out.println("<br>");
                     out.println("<h2>Ingrese el periodo</h2>");

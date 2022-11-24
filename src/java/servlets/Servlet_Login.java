@@ -53,8 +53,8 @@ public class Servlet_Login extends HttpServlet {
             RegistroDAO registro = new RegistroDAO();
             CargarEstudiantes cargador;
             CargarRevisor cargadorR;
-            Estudiante estd = null;
-            Revisor revis = null;
+            Estudiante estd = new Estudiante();
+            Revisor revis = new Revisor();
             Ingreso lg = new Ingreso("administrador", "admin");
             lg.login();
             boolean esAdmon=false;
