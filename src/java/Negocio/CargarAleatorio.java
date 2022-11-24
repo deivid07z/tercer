@@ -6,6 +6,7 @@
 package Negocio;
 
 import datos.EstudianteDAO;
+import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.Random;
 import java.util.logging.Level;
@@ -18,11 +19,12 @@ import util.RHException;
  * @author Sebastian
  */
 public class CargarAleatorio extends CargarEstudiantes{
-
+    private Random rd = SecureRandom.getInstanceStrong();
     public Estudiante cargarEstudiante(Estudiante estud) {
+         
         try {
             EstudianteDAO estudDao = new EstudianteDAO();
-            Random rd = new Random();
+            
             estudDao.incluirEstudiante(new Estudiante(estud.getK_codigo(), "Pepito"+rd.nextInt(50)+1, "Pepe"+rd.nextInt(50)+1,
                     "Perez"+rd.nextInt(50)+1, "Paez"+rd.nextInt(50)+1, "MA", "1", rd.nextInt(50), "scva9708@gmail.com"));
             return estudDao.buscarEstudiante(estud.getK_codigo());
