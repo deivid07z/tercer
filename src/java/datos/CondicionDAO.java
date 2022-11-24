@@ -29,10 +29,11 @@ public class CondicionDAO {
     }
 
     public void incluirCondicion(Condicion condicion) throws RHException, SQLException{
+        PreparedStatement prepStmt;
         try {
         String strSQL = "INSERT INTO cond (idcondicion, descripcion, permitevarios) VALUES (?,?,?)";
         Connection conexion = ServiceLocator.getInstance().tomarConexion();
-        PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+        prepStmt = conexion.prepareStatement(strSQL);
         prepStmt.setInt(1, condicion.getK_idCondicion()); 
         prepStmt.setString(2, condicion.getDescripcion()); 
         prepStmt.setInt(3, condicion.getPermiteVarios()); 
@@ -45,15 +46,17 @@ public class CondicionDAO {
            //throw new RHException( "ERROR", "ERROR "+ e.getMessage());
       }  finally {
          ServiceLocator.getInstance().liberarConexion();
+         prepStmt.close();
       }
     }
       public ArrayList<Condicion> buscarCondiciones() throws RHException {
+        PreparedStatement prepStmt;
         try {
             String strSQL = "SELECT c.idcategoria, c.nombre_categoria, c.puntaje, c.idcondicion, co.idcondicion, co.descripcion, co.permitevarios"
                     + " FROM CATEG c INNER JOIN COND co "
                     + " ON c.idcondicion = co.idcondicion";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             ResultSet rs = prepStmt.executeQuery();
             int idCondicionAnterior; 
             int idCondicion = 0;
@@ -80,6 +83,7 @@ public class CondicionDAO {
             //throw new RHException("ApartamentoDAO", "No pudo recuperar el Apartmaento " + e.getMessage());
         }  finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
         return condiciones;
     }

@@ -26,11 +26,12 @@ public class RevisorDAO {
     }
     
     public void incluirRevisor(Revisor revisor) throws RHException, SQLException{
+        PreparedStatement prepStmt;
         try {
       
         String strSQL = "INSERT INTO REV (cod_revisor, nombre_revisor) VALUES (?,?)";
         Connection conexion = ServiceLocator.getInstance().tomarConexion();
-        PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+        prepStmt = conexion.prepareStatement(strSQL);
         prepStmt.setLong(1, revisor.getK_codRevisor()); 
         prepStmt.setString(2, revisor.getNombreRevisor()); 
         //prepStmt.setDate(7, java.sql.Date.valueOf(revisor.getHire_date()));
@@ -42,14 +43,16 @@ public class RevisorDAO {
          //  throw new RHException( "ERROR", "ERROR "+ e.getMessage());
       }  finally {
          ServiceLocator.getInstance().liberarConexion();
+         prepStmt.close();
       }
     }
     
     public Revisor buscarRevisor(Long codigo_revisor) throws RHException {
+        PreparedStatement prepStmt;
         try {
             String strSQL = "SELECT cod_revisor, nombre_revisor FROM REV WHERE cod_revisor = ?";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             prepStmt.setLong(1, codigo_revisor);
             ResultSet rs = prepStmt.executeQuery();
             while (rs.next()) {
@@ -61,6 +64,7 @@ public class RevisorDAO {
             //throw new RHException("RevisorDAP", "No pudo recuperar el Estudiante " + e.getMessage());
         } finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
         return null;
     }

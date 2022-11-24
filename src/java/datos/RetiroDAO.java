@@ -25,11 +25,12 @@ public class RetiroDAO {
     }
     
     public void incluirRetiro(Retiro retiro, Estudiante estudiante, Tipo tipo) throws RHException, SQLException{
+        PreparedStatement prepStmt;
         try {
       
         String strSQL = "INSERT INTO RET (desc_ret, fecha_ret, idtipo, codigo, periodo) VALUES (?,?,?,?,?)";
         Connection conexion = ServiceLocator.getInstance().tomarConexion();
-        PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+        prepStmt = conexion.prepareStatement(strSQL);
         prepStmt.setString(1, retiro.getDescRet()); 
         prepStmt.setDate(2, retiro.getFechaRet()); 
         prepStmt.setString(3, tipo.getK_idTipo());   
@@ -42,6 +43,7 @@ public class RetiroDAO {
         //   throw new RHException( "ERROR", "ERROR "+ e.getMessage());
       }  finally {
          ServiceLocator.getInstance().liberarConexion();
+         prepStmt.close();
       }
     }
 }

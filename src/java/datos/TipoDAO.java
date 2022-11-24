@@ -27,10 +27,11 @@ public class TipoDAO {
     }
     Tipo tipo;
     public void incluirTipo(Tipo tipo) throws RHException, SQLException{
+        PreparedStatement prepStmt;
         try {
         String strSQL = "INSERT INTO TIP (idtipo, cantidad, periodo) VALUES (?,?,?)";
         Connection conexion = ServiceLocator.getInstance().tomarConexion();
-        PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+        prepStmt = conexion.prepareStatement(strSQL);
         prepStmt.setString(1, tipo.getK_idTipo()); 
         prepStmt.setInt(2, tipo.getCantidad());
         prepStmt.setString(3, tipo.getPfk_periodo());
@@ -42,14 +43,16 @@ public class TipoDAO {
           //  throw new RHException("ApartamentoDAO", "No pudo recuperar el Apartmaento " + e.getMessage());
         }  finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
     }
         
      public ArrayList<Tipo> buscarTipoPK(String periodo) throws RHException, SQLException{
-        try {
+        PreparedStatement prepStmt;
+         try {
         String strSQL = "select * from TIP where periodo = ? order by idTipo";
         Connection conexion = ServiceLocator.getInstance().tomarConexion();
-        PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+        prepStmt = conexion.prepareStatement(strSQL);
         prepStmt.setString(1, periodo); 
         ResultSet rs = prepStmt.executeQuery();
         ArrayList<Tipo> tipos =  new ArrayList();
@@ -62,15 +65,17 @@ public class TipoDAO {
             throw new RHException("ApartamentoDAO", "No pudo recuperar el Apartmaento " + e.getMessage());
         }  finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
     }
     
     public void actualizarTipo(Tipo tipo) throws RHException {
+        PreparedStatement prepStmt;
         try {
             String strSQL = "UPDATE TIP SET cantidad = ?"
                     + " WHERE idtipo = ? and periodo = ?";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             prepStmt.setInt(1,tipo.getCantidad());
             prepStmt.setString(2,tipo.getK_idTipo());
             prepStmt.setString(3,tipo.getPfk_periodo());
@@ -82,6 +87,7 @@ public class TipoDAO {
             throw new RHException("ApartamentoDAO", "No pudo recuperar el Apartmaento " + e.getMessage());
         }  finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
     }
 }

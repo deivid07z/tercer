@@ -27,10 +27,11 @@ public class CategoriaDAO {
     }
 
     public void incluirCategoria(Categoria categoria, Condicion condicion) throws RHException, SQLException{
+        PreparedStatement prepStmt;
         try {
         String strSQL = "INSERT INTO categ (idcategoria, nombre_categoria, puntaje, idcondicion) VALUES (?,?,?,?)";
         Connection conexion = ServiceLocator.getInstance().tomarConexion();
-        PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+        prepStmt = conexion.prepareStatement(strSQL);
         prepStmt.setInt(1, categoria.getK_idCategoria()); 
         prepStmt.setString(2, categoria.getNombreCategoria()); 
         prepStmt.setInt(3, categoria.getPuntaje()); 
@@ -44,14 +45,16 @@ public class CategoriaDAO {
            //throw new RHException( "ERROR", "ERROR "+ e.getMessage());
       }  finally {
          ServiceLocator.getInstance().liberarConexion();
+         prepStmt.close();
       }
     }
     
     public void buscarCategoria(Categoria categoria) throws RHException {
+        PreparedStatement prepStmt;
         try {
             String strSQL = "SELECT idcategoria, nombre_categoria, puntaje, idcondicion FROM CATEG WHERE idcategoria = ?";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             prepStmt.setInt(1, categoria.getK_idCategoria());
             ResultSet rs = prepStmt.executeQuery();
             while (rs.next()) {
@@ -62,14 +65,16 @@ public class CategoriaDAO {
             throw new RHException("ApartamentoDAO", "No pudo recuperar el Apartmaento " + e.getMessage());
         }  finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
     }
     
     public Categoria buscarCategoria(int idCategoria, int idCondicion) throws RHException {
+        PreparedStatement prepStmt;
         try {
             String strSQL = "SELECT idcategoria, nombre_categoria, puntaje FROM CATEG WHERE idcategoria = ? AND idcondicion = ?";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             prepStmt.setInt(1, idCategoria);
             prepStmt.setInt(2, idCondicion);
             ResultSet rs = prepStmt.executeQuery();
@@ -82,6 +87,7 @@ public class CategoriaDAO {
             throw new RHException("ApartamentoDAO", "No pudo recuperar el Apartmaento " + e.getMessage());
         }  finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
     }
 }

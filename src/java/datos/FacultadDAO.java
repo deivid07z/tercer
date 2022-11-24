@@ -28,10 +28,11 @@ public class FacultadDAO {
     }
     
     public ArrayList<Facultad> listarFacultades() throws RHException {
+        PreparedStatement prepStmt;
         try {
             String strSQL = "SELECT idfacultad,cupo,nombre_facultad FROM fac ";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             ResultSet rs = prepStmt.executeQuery();
             while (rs.next()) {
                 listFac.add(new Facultad(rs.getString(1),rs.getInt(2),rs.getString(3)));
@@ -42,6 +43,7 @@ public class FacultadDAO {
             //throw new RHException("EstudianteDAP", "No pudo recuperar el Estudiante " + e.getMessage());
         } finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
         return null;
     }

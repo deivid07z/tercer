@@ -26,11 +26,12 @@ public class EstudianteDAO {
     
    
     public void incluirEstudiante(Estudiante estudiante) throws RHException, SQLException{
+        PreparedStatement prepStmt;
         try {
       
         String strSQL = "INSERT INTO est (codigo, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, estadoestudiante, idproyecto, indicematricula, correoestudiante) VALUES(?,?,?,?,?,?,?,?,?)";
         Connection conexion = ServiceLocator.getInstance().tomarConexion();
-        PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+        prepStmt = conexion.prepareStatement(strSQL);
         prepStmt.setLong(1,estudiante.getK_codigo()); 
         prepStmt.setString(2, estudiante.getPrimerNombre()); 
         prepStmt.setString(3, estudiante.getSegundoNombre()); 
@@ -48,13 +49,15 @@ public class EstudianteDAO {
           // throw new RHException( "ERROR", "ERROR "+ e.getMessage());
       }  finally {
          ServiceLocator.getInstance().liberarConexion();
+         prepStmt.close();
       }
     }
     public Estudiante buscarEstudiante(Long codigoEst) throws RHException {
+        PreparedStatement prepStmt;
         try {
             String strSQL = "SELECT codigo, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, estadoestudiante, idproyecto, indicematricula, correoestudiante FROM est WHERE codigo = ?";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             prepStmt.setLong(1, codigoEst);
             ResultSet rs = prepStmt.executeQuery();
             while (rs.next()) {
@@ -67,6 +70,7 @@ public class EstudianteDAO {
             //throw new RHException("EstudianteDAP", "No pudo recuperar el Estudiante " + e.getMessage());
         }  finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
         return null;
     }

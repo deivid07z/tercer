@@ -24,11 +24,12 @@ public class ProyectoDAO {
     }
     
     public void incluirProyecto(Proyecto proyecto, Facultad facultad) throws RHException, SQLException{
+        PreparedStatement prepStmt;
         try {
       
         String strSQL = "INSERT INTO proy (idproyecto, nombre_proyecto, idfacultad) VALUES (?,?,?)";
         Connection conexion = ServiceLocator.getInstance().tomarConexion();
-        PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+        prepStmt = conexion.prepareStatement(strSQL);
         prepStmt.setString(1, proyecto.getK_idProyecto()); 
         prepStmt.setString(2, proyecto.getNombreProyecto()); 
         prepStmt.setString(3, facultad.getNombreFacultad());   
@@ -41,6 +42,7 @@ public class ProyectoDAO {
      //      throw new RHException( "ERROR", "ERROR "+ e.getMessage());
       }  finally {
          ServiceLocator.getInstance().liberarConexion();
+         prepStmt.close();
       }
     }
 }

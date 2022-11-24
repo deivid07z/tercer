@@ -28,10 +28,11 @@ public class EstadoDAO {
     private ArrayList<Estado> estados = new ArrayList();
     Estado estado;
     public void incluirEstado(Estado estado) throws RHException, SQLException{
+        PreparedStatement prepStmt;
         try {
         String strSQL = "INSERT INTO ESTADO (fecha_inicial, fecha_final, idestado, descripcion_estado, periodo) VALUES (?,?,?,?,?)";
         Connection conexion = ServiceLocator.getInstance().tomarConexion();
-        PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+        prepStmt = conexion.prepareStatement(strSQL);
         prepStmt.setDate(1, estado.getFecha_inicial()); 
         prepStmt.setDate(2, estado.getFecha_final());
         prepStmt.setInt(3, estado.getIdestado());
@@ -48,13 +49,15 @@ public class EstadoDAO {
            //throw new RHException( "ERROR", "ERROR "+ e.getMessage());
       }  finally {
          ServiceLocator.getInstance().liberarConexion();
+         prepStmt.close();
       }
     }
     public Estado buscarEstado(java.sql.Date sqlDate) throws RHException {
+        PreparedStatement prepStmt;
         try {
            String strSQL = "SELECT fecha_inicial, fecha_final, idestado, descripcion_estado, periodo FROM ESTADO WHERE fecha_inicial <= ? and fecha_final >= ? ";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             prepStmt.setDate(1, sqlDate);
             prepStmt.setDate(2, sqlDate);
             ResultSet rs = prepStmt.executeQuery();
@@ -67,14 +70,16 @@ public class EstadoDAO {
             throw new RHException("ApartamentoDAO", "No pudo recuperar el Apartmaento " + e.getMessage());
         }  finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
     }
     
     public ArrayList<Estado> buscarEstadoPK(String periodo) throws RHException {
+        PreparedStatement prepStmt;
         try {
            String strSQL = "SELECT fecha_inicial, fecha_final, idestado, descripcion_estado, periodo FROM ESTADO WHERE periodo = ? order by idestado";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             prepStmt.setString(1, periodo);
             ResultSet rs = prepStmt.executeQuery();
             ArrayList<Estado> estados = new ArrayList();
@@ -87,15 +92,17 @@ public class EstadoDAO {
             throw new RHException("ApartamentoDAO", "No pudo recuperar el Apartmaento " + e.getMessage());
         }  finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
     }
     
     public void actualizarEstado(Estado estado) throws RHException {
+        PreparedStatement prepStmt;
         try {
             String strSQL = "UPDATE ESTADO SET fecha_inicial = ?, fecha_final = ?, descripcion_estado = ?"
                     + " WHERE idestado = ? and periodo = ?";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             prepStmt.setDate(1,estado.getFecha_inicial());
             prepStmt.setDate(2,estado.getFecha_final());
             prepStmt.setString(3,estado.getDescripcion_estado());
@@ -109,6 +116,7 @@ public class EstadoDAO {
             throw new RHException("ApartamentoDAO", "No pudo recuperar el Apartmaento " + e.getMessage());
         }  finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
     }
 }

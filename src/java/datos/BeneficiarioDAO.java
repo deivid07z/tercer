@@ -23,11 +23,13 @@ public class BeneficiarioDAO {
     public BeneficiarioDAO(){
     
     }
-    public long puntajeSolicitud(Long codigoEst, String periodo){
+    public long puntajeSolicitud(Long codigoEst, String periodo) throws SQLException{
+        Connection conexion;
+        PreparedStatement prepStmt;
         try {
             String strSQL = "SELECT puntaje FROM sol WHERE codigo = ? and periodo = ?";
-            Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            conexion = ServiceLocator.getInstance().tomarConexion();
+            prepStmt = conexion.prepareStatement(strSQL);
             prepStmt.setLong(1, codigoEst);
             prepStmt.setString(2, periodo);
             ResultSet rs = prepStmt.executeQuery();
@@ -39,15 +41,19 @@ public class BeneficiarioDAO {
             CaException.getInstance().setDetalle(e);
             //throw new RHException("EstudianteDAP", "No pudo recuperar el Estudiante " + e.getMessage());
         }  finally {
+            prepStmt.close();
             ServiceLocator.getInstance().liberarConexion();
+            conexion.close();
+            
         }
         return 0;
     }
-    public boolean beneficiario(Long codigoEst, String periodo){
+    public boolean beneficiario(Long codigoEst, String periodo) throws SQLException{
+        PreparedStatement prepStmt;
         try {
             String strSQL = "SELECT * FROM ben WHERE codigo = ? and periodo = ?";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             prepStmt.setLong(1, codigoEst);
             prepStmt.setString(2, periodo);
             ResultSet rs = prepStmt.executeQuery();
@@ -60,16 +66,18 @@ public class BeneficiarioDAO {
             //throw new RHException("EstudianteDAP", "No pudo recuperar el Estudiante " + e.getMessage());
         }  finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
         return false;
     }
-    public ArrayList puntajeDocumento(Long codigoEst, String periodo){
+    public ArrayList puntajeDocumento(Long codigoEst, String periodo) throws SQLException{
         ArrayList puntaje = new ArrayList();
+        PreparedStatement prepStmt;
         try {
             String strSQL = "select puntaje from categ join doc using (idcategoria,idcondicion) "
                     + "where codigo=? and periodo=?";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             prepStmt.setLong(1, codigoEst);
             prepStmt.setString(2, periodo);
             ResultSet rs = prepStmt.executeQuery();
@@ -81,16 +89,18 @@ public class BeneficiarioDAO {
             CaException.getInstance().setDetalle(e);
             //throw new RHException("EstudianteDAP", "No pudo recuperar el Estudiante " + e.getMessage());
         }  finally {
+            prepStmt.close();
             ServiceLocator.getInstance().liberarConexion();
         }
         return puntaje;
     }
-    public String listarBeneficiarios(String periodo){
+    public String listarBeneficiarios(String periodo) throws SQLException{
         String correo="";
+        PreparedStatement prepStmt;
         try {
             String strSQL = "SELECT correoestudiante FROM est JOIN ben USING (CODIGO) WHERE periodo = ?";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             prepStmt.setString(1, periodo);
             ResultSet rs = prepStmt.executeQuery();
             while (rs.next()) {
@@ -103,7 +113,9 @@ public class BeneficiarioDAO {
             //throw new RHException("EstudianteDAP", "No pudo recuperar el Estudiante " + e.getMessage());
         }  finally {
             ServiceLocator.getInstance().liberarConexion();
-            return correo;
+            prepStmt.close();
+            
         }
+        return correo;
     }
 }

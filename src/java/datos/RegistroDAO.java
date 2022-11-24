@@ -40,11 +40,12 @@ public class RegistroDAO {
     }
     
     public Boolean buscarUsuario(Long codigo) throws RHException, SQLException {
+       PreparedStatement prepStmt;
         try {
             conectarCreador();
             String strSQL = "SELECT USERNAME FROM DBA_USERS WHERE USERNAME = ?";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             prepStmt.setString(1, "U_"+codigo);
             ResultSet rs = prepStmt.executeQuery();
             if (rs.next()) {
@@ -56,6 +57,7 @@ public class RegistroDAO {
             return false;
         } finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
     }
     
@@ -96,11 +98,11 @@ public class RegistroDAO {
         }
     }
     
-    public void crearUsuario(){
+    public void crearUsuario() throws SQLException{
+        PreparedStatement prepStmt; //= conexion.prepareStatement(strSQL);
         try {
            String strSQL; //= "alter session set \"_ORACLE_SCRIPT\"=true";
-           Connection conexion = ServiceLocator.getInstance().tomarConexion();
-           PreparedStatement prepStmt; //= conexion.prepareStatement(strSQL);
+           Connection conexion = ServiceLocator.getInstance().tomarConexion();   
            //prepStmt.execute();
            strSQL = "CREATE USER U_"+nuevoUser+" IDENTIFIED BY "+nuevoPassword+
                    " DEFAULT TABLESPACE SAAUSR TEMPORARY TABLESPACE SAAUSRTMP QUOTA 2K ON SAADEF";
@@ -110,32 +112,37 @@ public class RegistroDAO {
             CaException.getInstance().setDetalle(e);
         } finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close(); 
         }
     }
     
-    public void asignarRolEstudiante(){
+    public void asignarRolEstudiante() throws SQLException{
+        PreparedStatement prepStmt;
         try {
            String strSQL = "GRANT R_ESTUDIANTE,R_CONSULTA,CONNECT TO U_"+nuevoUser;
            Connection conexion = ServiceLocator.getInstance().tomarConexion();
-           PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+           prepStmt = conexion.prepareStatement(strSQL);
            prepStmt.execute();          
         } catch (Exception e) {
             CaException.getInstance().setDetalle(e);
         } finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
     }
     
-    public void asignarRolRevisor(){
+    public void asignarRolRevisor() throws SQLException{
+        PreparedStatement prepStmt;
         try {
            String strSQL = "GRANT R_REVISOR,R_CONSULTA,CONNECT TO U_"+nuevoUser;
            Connection conexion = ServiceLocator.getInstance().tomarConexion();
-           PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+           prepStmt = conexion.prepareStatement(strSQL);
            prepStmt.execute();          
         } catch (Exception e) {
             CaException.getInstance().setDetalle(e);
         } finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
     }
 }

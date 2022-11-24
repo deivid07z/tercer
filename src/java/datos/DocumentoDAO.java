@@ -21,10 +21,11 @@ import util.ServiceLocator;
 public class DocumentoDAO {
 
     public void incluirDocumento(Documento doc, Solicitud solicitud) throws RHException, SQLException {
+        PreparedStatement prepStmt;
         try {
             String strSQL = "INSERT INTO DOC (documento,idcondicion, idcategoria, periodo, codigo, estado) VALUES (?,?,?,?,?,default)";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             prepStmt.setString(1, doc.getDocumento());
             prepStmt.setInt(2, doc.getFk_idCondicion());
             prepStmt.setInt(3, doc.getPfk_idCategoria());
@@ -37,14 +38,16 @@ public class DocumentoDAO {
             //throw new RHException( "ERROR", "ERROR "+ e.getMessage());
         } finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
     }
     
     public void actualizarDocumento(Documento doc) throws RHException, SQLException {
+        PreparedStatement prepStmt;
         try {
             String strSQL = "UPDATE DOC SET COD_REVISOR=?, ESTADO=? WHERE codigo=? and periodo=? and idcategoria=? and idcondicion=?";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+            prepStmt = conexion.prepareStatement(strSQL);
             prepStmt.setLong(1, doc.getFk_codRevisor());
             prepStmt.setString(2, doc.getEstado());
             prepStmt.setLong(3, doc.getPfk_codigo());
@@ -58,6 +61,7 @@ public class DocumentoDAO {
             //throw new RHException( "ERROR", "ERROR "+ e.getMessage());
         } finally {
             ServiceLocator.getInstance().liberarConexion();
+            prepStmt.close();
         }
     }
 }
