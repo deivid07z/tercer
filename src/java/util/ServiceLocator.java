@@ -96,10 +96,11 @@ public class ServiceLocator {
 			  wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+                                Thread.currentThread().interrupt();
 			}
 		}
 		conexionLibre = false;
-		notify();
+		notifyAll();
 		return conexion;
 	}
 
@@ -113,11 +114,12 @@ public class ServiceLocator {
 				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+                                Thread.currentThread().interrupt();
 			}
 		}
 
 		conexionLibre = true;
-		notify();
+		notifyAll();
 	}
 
 	/**
